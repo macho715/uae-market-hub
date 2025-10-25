@@ -816,7 +816,7 @@
             html = html.replace(/<p><br>/g, '<p>');
             html = html.replace(/<br><\/p>/g, '</p>');
             // Fix breaks before headers
-            html = html.replace(/<br><h[234]>/g, '<h$1>');
+            html = html.replace(/<br>(<(h[2-4][^>]*)>)/g, '$1');
 
             return html;
         }
