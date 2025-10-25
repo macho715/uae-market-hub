@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAE Beauty Market Intelligence Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            /* dark:bg-gray-900 */
+            color: #F9FAFB;
+            /* dark:text-gray-100 */
+        }
+
+        .dark .form-input,
+        .dark .form-textarea {
+            background-color: #374151;
+            /* dark:bg-gray-700 */
+            border-color: #4B5563;
+            /* dark:border-gray-600 */
+            color: #F9FAFB;
+            /* dark:text-white */
+        }
+
+        .dark .form-input::placeholder,
+        .dark .form-textarea::placeholder {
+            color: #9CA3AF;
+            /* dark:placeholder-gray-400 */
+        }
+
+        .dark .btn-primary {
+            background-color: #3B82F6;
+            /* bg-blue-600 */
+            color: white;
+        }
+
+        .dark .btn-primary:hover {
+            background-color: #2563EB;
+            /* hover:bg-blue-700 */
+        }
+
+        .dark .btn-secondary {
+            background-color: #4B5563;
+            /* bg-gray-600 */
+            color: white;
+        }
+
+        .dark .btn-secondary:hover {
+            background-color: #6B7280;
+            /* hover:bg-gray-500 */
+        }
+
+        .dark .card {
+            background-color: #1F2937;
+            /* dark:bg-gray-800 */
+            border-color: #374151;
+            /* dark:border-gray-700 */
+        }
+
+        .dark .modal-content {
+            background-color: #1F2937;
+            /* dark:bg-gray-800 */
+        }
+
+        .dark .report-content h2 {
+            font-size: 1.25rem;
+            /* text-xl */
+            font-weight: 600;
+            /* font-semibold */
+            margin-top: 1.5rem;
+            /* mt-6 */
+            margin-bottom: 0.5rem;
+            /* mb-2 */
+            border-bottom: 1px solid #374151;
+            /* border-b border-gray-700 */
+            padding-bottom: 0.25rem;
+            /* pb-1 */
+        }
+
+        .dark .report-content h3 {
+            font-size: 1.125rem;
+            /* text-lg */
+            font-weight: 600;
+            /* font-semibold */
+            margin-top: 1rem;
+            /* mt-4 */
+            margin-bottom: 0.5rem;
+            /* mb-2 */
+            color: #93C5FD;
+            /* text-blue-300 */
+        }
+
+        .dark .report-content ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            /* ml-6 */
+            margin-bottom: 1rem;
+            /* mb-4 */
+        }
+
+        .dark .report-content li {
+            margin-bottom: 0.25rem;
+            /* mb-1 */
+        }
+
+        .dark .report-content p {
+            margin-bottom: 1rem;
+            /* mb-4 */
+            line-height: 1.6;
+            /* leading-relaxed */
+        }
+
+        .dark .report-content strong {
+            color: #F9FAFB;
+            /* text-white */
+        }
+
+        .dark .source-link {
+            color: #60A5FA;
+            /* text-blue-400 */
+            word-break: break-all;
+        }
+
+        .dark .source-link:hover {
+            color: #93C5FD;
+            /* text-blue-300 */
+            text-decoration: underline;
+        }
+
+        /* Loader */
+        .loader {
+            border: 4px solid #4B5563;
+            /* border-gray-600 */
+            border-top: 4px solid #3B82F6;
+            /* border-blue-600 */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-white">UAE Beauty Market Intelligence Hub</h1>
+            <p class="text-lg text-gray-300">Your AI-powered dashboard for UAE market entry strategy.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Panel: Inputs -->
+            <div class="lg:col-span-1 space-y-6">
+
+                <!-- GTM Strategy Section -->
+                <div class="card border rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-white border-b border-gray-700 pb-2">1. GTM Strategy
+                        Generator</h2>
+
+                    <div>
+                        <label for="productCategory" class="block text-sm font-medium text-gray-300 mb-1">Product
+                            Category</label>
+                        <input type="text" id="productCategoryInput"
+                            placeholder="e.g., Luxury Skincare, High-end Cosmetics"
+                            class="form-input w-full rounded-md shadow-sm">
+                    </div>
+
+                    <div>
+                        <label for="targetAudience" class="block text-sm font-medium text-gray-300 mb-1">Target
+                            Audience</label>
+                        <input type="text" id="targetAudienceInput" placeholder="e.g., Affluent Gen Z, HNWIs"
+                            class="form-input w-full rounded-md shadow-sm">
+                    </div>
+
+                    <div>
+                        <label for="competitors" class="block text-sm font-medium text-gray-300 mb-1">Key
+                            Competitors</label>
+                        <input type="text" id="competitorInput" placeholder="e.g., L'Oreal, Estee Lauder, Shiseido"
+                            class="form-input w-full rounded-md shadow-sm">
+                    </div>
+
+                    <button id="generateGTMButton"
+                        class="w-full btn-primary font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out flex items-center justify-center space-x-2 mt-4">
+                        <span>Generate GTM Report</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <button id="quickCompetitorScanButton"
+                        class="w-full btn-secondary font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out flex items-center justify-center space-x-2 mt-2">
+                        <span>✨ Quick Competitor Scan</span>
+                    </button>
+                </div>
+
+                <!-- Location Scout Section -->
+                <div class="card border rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-white border-b border-gray-700 pb-2">2. Retail Location
+                        Scout</h2>
+
+                    <div>
+                        <label for="locationInput" class="block text-sm font-medium text-gray-300 mb-1">City or
+                            District</label>
+                        <input type="text" id="locationInput" placeholder="e.g., Dubai Marina, Downtown Dubai"
+                            class="form-input w-full rounded-md shadow-sm">
+                    </div>
+
+                    <button id="findMallsButton"
+                        class="w-full btn-primary font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out flex items-center justify-center space-x-2 mt-4">
+                        <span>Find Key Malls</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Right Panel: Output -->
+            <div class="lg:col-span-2 card border rounded-lg p-6 shadow-lg min-h-[600px]">
+                <h2 class="text-2xl font-semibold mb-4 text-white" id="reportTitle">Report Panel</h2>
+
+                <div id="loader" class="hidden flex flex-col items-center justify-center text-center h-full">
+                    <div class="loader"></div>
+                    <p class="mt-4 text-lg text-gray-300" id="loaderText">Generating analysis... This may take a moment.
+                    </p>
+                </div>
+
+                <div id="reportOutput" class="report-content text-gray-200">
+                    <p class="text-gray-400">Please enter your criteria on the left and click a "Generate" button to see
+                        results here.</p>
+
+                </div>
+
+                <!-- AI-Powered Tools Section -->
+                <div id="aiToolsSection" class="hidden mt-6 pt-6 border-t border-gray-700">
+                    <h3 class="text-xl font-semibold mb-4 text-white">✨ AI-Powered Tools</h3>
+                    <p class="text-sm text-gray-400 mb-4">Use these tools to act on the GTM report data.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button id="generateMarketingCopyButton"
+                            class="w-full btn-secondary font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">Generate
+                            Marketing Copy</button>
+                        <button id="generatePersonasButton"
+                            class="w-full btn-secondary font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">Suggest
+                            Influencer Personas</button>
+                        <button id="generateSWOTButton"
+                            class="w-full btn-secondary font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">Generate
+                            SWOT Analysis</button>
+                        <button id="generateCompetitorAnalysisButton"
+                            class="w-full btn-secondary font-medium py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">Deep-Dive
+                            Competitor Analysis</button>
+                    </div>
+                </div>
+
+                <!-- Grounded Sources Section -->
+                <div id="groundedSources" class="hidden mt-6 pt-6 border-t border-gray-700">
+                    <h3 class="text-lg font-semibold mb-2 text-white">Grounded Sources</h3>
+                    <p class="text-sm text-gray-400 mb-4">This analysis is based on real-time Google Search results from
+                        the following sources:</p>
+                    <div id="sourcesList" class="space-y-2"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <!-- Modal panel -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div
+                class="inline-block align-bottom modal-content rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border border-gray-700">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-white" id="modalTitle">Modal Title</h3>
+                            <div class="mt-4">
+                                <div id="modalContent"
+                                    class="text-sm text-gray-300 report-content max-h-[60vh] overflow-y-auto">
+                                    <p>Modal content goes here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="modalCloseButton"
+                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-gray-700 text-base font-medium text-white hover:bg-gray-600 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- Globals ---
+        const productCategoryInput = document.getElementById('productCategoryInput');
+        const targetAudienceInput = document.getElementById('targetAudienceInput');
+        const competitorInput = document.getElementById('competitorInput');
+        const locationInput = document.getElementById('locationInput');
+
+        const generateGTMButton = document.getElementById('generateGTMButton');
+        const quickCompetitorScanButton = document.getElementById('quickCompetitorScanButton');
+        const findMallsButton = document.getElementById('findMallsButton');
+
+        const reportOutput = document.getElementById('reportOutput');
+        const reportTitle = document.getElementById('reportTitle');
+        const loader = document.getElementById('loader');
+        const loaderText = document.getElementById('loaderText');
+        const aiToolsSection = document.getElementById('aiToolsSection');
+        const groundedSources = document.getElementById('groundedSources');
+        const sourcesList = document.getElementById('sourcesList');
+
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+
+        // AI Tool Buttons
+        const generateMarketingCopyButton = document.getElementById('generateMarketingCopyButton');
+        const generatePersonasButton = document.getElementById('generatePersonasButton');
+        const generateSWOTButton = document.getElementById('generateSWOTButton');
+        const generateCompetitorAnalysisButton = document.getElementById('generateCompetitorAnalysisButton');
+
+        let lastGTMReport = ""; // Store the last GTM report for AI tools
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            generateGTMButton.addEventListener('click', handleGenerateAnalysis);
+            quickCompetitorScanButton.addEventListener('click', handleQuickCompetitorScan);
+            findMallsButton.addEventListener('click', handleFindKeyMalls);
+
+            // AI Tool Listeners
+            generateMarketingCopyButton.addEventListener('click', handleGenerateMarketingCopy);
+            generatePersonasButton.addEventListener('click', handleGeneratePersonas);
+            generateSWOTButton.addEventListener('click', handleGenerateSWOT);
+            generateCompetitorAnalysisButton.addEventListener('click', handleGenerateCompetitorAnalysis);
+
+            // Modal
+            modalCloseButton.addEventListener('click', () => modal.classList.add('hidden'));
+        });
+
+        // --- Main Handler Functions ---
+
+        /**
+         * 1. Handles the main "Generate GTM Report" button click
+         */
+        async function handleGenerateAnalysis() {
+            const product = productCategoryInput.value;
+            const audience = targetAudienceInput.value;
+            const competitors = competitorInput.value;
+            const reportType = "GTM Report";
+
+            if (!product || !audience || !competitors) {
+                showModal("Input Error", "<p>Please fill in all fields: Product Category, Target Audience, and Key Competitors.</p>");
+                return;
+            }
+
+            const userInput = `Analyze the UAE market for:
+            - Product: ${product}
+            - Audience: ${audience}
+            - Competitors: ${competitors}`;
+
+            const systemPrompt = `You are a world-class Go-to-Market (GTM) strategist specializing in the UAE's luxury beauty and cosmetics sector.
+            Generate a concise, actionable GTM report based on the user's query and live Google Search results.
+            The report MUST be formatted in simple Markdown and include these sections:
+
+            ## 1. Executive Summary
+            A brief overview of the market opportunity and key recommendations.
+
+            ## 2. Competitive Landscape
+            Analyze the provided competitors (${competitors}). What are their key strengths, weaknesses, and market positioning in the UAE?
+
+            ## 3. Key Retail & Distribution Channels
+            Identify the top 3-5 retail channels (e.g., Sephora, Harvey Nichols, online platforms like Ounass) essential for this product.
+
+            ## 4. Target Consumer Insights
+            Provide insights into the (${audience}) in the UAE. What are their purchasing behaviors, preferences, and key social media platforms?
+
+            ## 5. Marketing & Regulatory Compliance
+            Briefly outline key marketing regulations (e.g., National Media Council for influencers) and product compliance requirements (e.g., MOIAT/ESMA labeling) for cosmetics in the UAE.`;
+
+            setLoading(true, reportType, "Generating full GTM report...");
+            aiToolsSection.classList.add('hidden');
+            groundedSources.classList.add('hidden');
+
+            try {
+                const { text, sources } = await callGeminiAPI(userInput, systemPrompt, true);
+                lastGTMReport = text; // Save for AI tools
+                reportTitle.textContent = "GTM Strategy Report";
+                reportOutput.innerHTML = simpleMarkdownToHtml(text);
+                displaySources(sources);
+                aiToolsSection.classList.remove('hidden');
+            } catch (error) {
+                console.error("Error in handleGenerateAnalysis:", error);
+                showModal("API Error", `<p>Failed to generate GTM report. See console for details.</p><p>${error.message}</p>`);
+                reportOutput.innerHTML = `<p class="text-red-400">Error: ${error.message}</p>`;
+            } finally {
+                setLoading(false, reportType);
+            }
+        }
+
+        /**
+         * 2. Handles the "Quick Competitor Scan" button click
+         */
+        async function handleQuickCompetitorScan() {
+            const product = productCategoryInput.value;
+            const competitors = competitorInput.value;
+            const reportType = "Quick Scan";
+
+            if (!product || !competitors) {
+                showModal("Input Error", "<p>Please enter both 'Product Category' and 'Key Competitors' for a quick scan.</p>");
+                return;
+            }
+
+            const userInput = `Quickly scan the UAE market for ${product} focusing on these competitors: ${competitors}`;
+
+            const systemPrompt = `You are a fast-moving market intelligence analyst. Based on Google Search results, provide a concise side-by-side comparison of the specified competitors (${competitors}) in the UAE for the given product category (${product}).
+            Focus ONLY on:
+            - **Market Positioning:** (e.g., Luxury, Mass-market, Niche)
+            - **Key Strengths in UAE:** (e.g., Strong retail presence, Influencer marketing)
+            - **Primary Sales Channels:** (e.g., Sephora, Own e-com, Pharmacies)
+
+            Use simple Markdown tables or bullet points for easy comparison.`;
+
+            setLoading(true, reportType, "Scanning competitors...");
+            aiToolsSection.classList.add('hidden');
+            groundedSources.classList.add('hidden');
+
+            try {
+                const { text, sources } = await callGeminiAPI(userInput, systemPrompt, true);
+                lastGTMReport = ""; // This is not a full GTM report
+                reportTitle.textContent = "Quick Competitor Scan";
+                reportOutput.innerHTML = simpleMarkdownToHtml(text);
+                displaySources(sources);
+            } catch (error) {
+                console.error("Error in handleQuickCompetitorScan:", error);
+                showModal("API Error", `<p>Failed to generate competitor scan. See console for details.</p><p>${error.message}</p>`);
+                reportOutput.innerHTML = `<p class="text-red-400">Error: ${error.message}</p>`;
+            } finally {
+                setLoading(false, reportType);
+            }
+        }
+
+        /**
+         * 3. Handles the "Find Key Malls" button click
+         */
+        async function handleFindKeyMalls() {
+            const location = locationInput.value;
+            const reportType = "Location Scout";
+
+            if (!location) {
+                showModal("Input Error", "<p>Please enter a 'City or District' to find key malls.</p>");
+                return;
+            }
+
+            const userInput = `Find key retail malls for luxury beauty near ${location}, UAE.`;
+
+            // *** MODIFICATION HERE: Changed "Top 3" to "Top 5" ***
+            const systemPrompt = `You are a UAE-based retail location scout for luxury brands. Based on Google Search results, recommend the **Top 5 most important shopping malls** near "${location}" for a high-end beauty brand to visit.
+
+            For each mall, provide:
+            - **Mall Name:**
+            - **Why it's relevant:** (e.g., High footfall of target audience, luxury brand adjacencies)
+            - **Key Anchor Beauty Retailers:** (e.g., Sephora, Harvey Nichols, Bloomingdale's, specific brand boutiques)
+
+            Format this as a simple Markdown list.`;
+
+            setLoading(true, reportType, `Scouting locations near ${location}...`);
+            aiToolsSection.classList.add('hidden');
+            groundedSources.classList.add('hidden');
+
+            try {
+                const { text, sources } = await callGeminiAPI(userInput, systemPrompt, true);
+                lastGTMReport = ""; // This is not a full GTM report
+                reportTitle.textContent = `Key Malls Near: ${location}`;
+                reportOutput.innerHTML = simpleMarkdownToHtml(text);
+                displaySources(sources);
+            } catch (error) {
+                console.error("Error in handleFindKeyMalls:", error);
+                showModal("API Error", `<p>Failed to find key malls. See console for details.</p><p>${error.message}</p>`);
+                reportOutput.innerHTML = `<p class="text-red-400">Error: ${error.message}</p>`;
+            } finally {
+                setLoading(false, reportType);
+            }
+        }
+
+
+        // --- AI Tool Handlers ---
+
+        /**
+         * 4. AI Tool: Generate Marketing Copy
+         */
+        async function handleGenerateMarketingCopy() {
+            if (!lastGTMReport) {
+                showModal("Error", "<p>Please generate a GTM Report first.</p>");
+                return;
+            }
+
+            const userInput = `Based on the following GTM report, generate marketing copy. Report: ${lastGTMReport}`;
+            const systemPrompt = `You are a creative director for a luxury beauty brand entering the UAE. Based on the provided GTM report, generate:
+            1.  **Five (5) short, catchy marketing slogans/taglines** for the UAE market.
+            2.  **Three (3) Instagram post ideas** (including a brief visual description and caption hook) to resonate with the target audience.
+            Format in simple Markdown.`;
+
+            showModal("Generating...", "<div class='flex justify-center items-center'><div class='loader'></div><p class='ml-4'>Generating marketing copy...</p></div>");
+
+            try {
+                const { text } = await callGeminiAPI(userInput, systemPrompt, false); // No search needed, uses report
+                showModal("Generated Marketing Copy", simpleMarkdownToHtml(text));
+            } catch (error) {
+                console.error("Error in handleGenerateMarketingCopy:", error);
+                showModal("API Error", `<p>Failed to generate marketing copy. See console for details.</p><p>${error.message}</p>`);
+            }
+        }
+
+        /**
+         * 5. AI Tool: Suggest Influencer Personas
+         */
+        async function handleGeneratePersonas() {
+            if (!lastGTMReport) {
+                showModal("Error", "<p>Please generate a GTM Report first.</p>");
+                return;
+            }
+
+            const userInput = `Based on the following GTM report, suggest influencer personas. Report: ${lastGTMReport}`;
+            const systemPrompt = `You are an influencer marketing manager in Dubai. Based on the target audience in the provided GTM report, define **three (3) specific, archetypal influencer personas** to partner with.
+            For each persona, describe:
+            - **Archetype Name:** (e.g., "The Emirati Luxury Insider", "The Expat 'It Girl'", "The Clean Beauty Advocate")
+            - **Key Characteristics:** (Style, tone, content focus)
+            - **Core Message/Value:** (What they bring to the brand)
+            Format in simple Markdown.`;
+
+            showModal("Generating...", "<div class='flex justify-center items-center'><div class='loader'></div><p class='ml-4'>Suggesting influencer personas...</p></div>");
+
+            try {
+                const { text } = await callGeminiAPI(userInput, systemPrompt, false);
+                showModal("Suggested Influencer Personas", simpleMarkdownToHtml(text));
+            } catch (error) {
+                console.error("Error in handleGeneratePersonas:", error);
+                showModal("API Error", `<p>Failed to suggest personas. See console for details.</p><p>${error.message}</p>`);
+            }
+        }
+
+        /**
+         * 6. AI Tool: Generate SWOT Analysis
+         */
+        async function handleGenerateSWOT() {
+            if (!lastGTMReport) {
+                showModal("Error", "<p>Please generate a GTM Report first.</p>");
+                return;
+            }
+
+            const userInput = `Based on the following GTM report, generate a SWOT analysis. Report: ${lastGTMReport}`;
+            const systemPrompt = `You are a senior business analyst. Based *only* on the provided GTM report, generate a concise SWOT analysis (Strengths, Weaknesses, Opportunities, Threats) for the brand's entry into the UAE.
+            - **Strengths:** (Internal positives, e.g., "High-end product")
+            - **Weaknesses:** (Internal negatives, e.g., "No brand recognition in UAE")
+            - **Opportunities:** (External positives, e.g., "High consumer spending")
+            - **Threats:** (External negatives, e.g., "Strong competition", "Tough regulations")
+            Format in simple Markdown with clear headings for each of the 4 categories.`;
+
+            showModal("Generating...", "<div class='flex justify-center items-center'><div class='loader'></div><p class='ml-4'>Generating SWOT analysis...</p></div>");
+
+            try {
+                const { text } = await callGeminiAPI(userInput, systemPrompt, false);
+                showModal("SWOT Analysis", simpleMarkdownToHtml(text));
+            } catch (error) {
+                console.error("Error in handleGenerateSWOT:", error);
+                showModal("API Error", `<p>Failed to generate SWOT analysis. See console for details.</p><p>${error.message}</p>`);
+            }
+        }
+
+        /**
+         * 7. AI Tool: Deep-Dive Competitor Analysis
+         */
+        async function handleGenerateCompetitorAnalysis() {
+            if (!lastGTMReport) {
+                showModal("Error", "<p>Please generate a GTM Report first.</p>");
+                return;
+            }
+
+            const competitors = competitorInput.value;
+            const userInput = `Using the GTM report for context, perform a deep-dive analysis on these competitors: ${competitors}. Report: ${lastGTMReport}`;
+            const systemPrompt = `You are a competitive intelligence expert. Using the provided GTM report as context and **new Google Search results**, perform a deep-dive analysis of the specified competitors (${competitors}).
+            Focus on:
+            1.  **Recent UAE-specific News or Campaigns:** (What have they been doing *lately*?)
+            2.  **Perceived Weaknesses/Gaps:** (What are their known weaknesses or gaps in the UAE market that a new brand could exploit?)
+            3.  **Primary Marketing Channels:** (Where are they most visible? e.g., Dubai Mall OOH, Top-tier influencers, Khaleej Times ads)
+            Format in simple Markdown.`;
+
+            showModal("Generating...", "<div class='flex justify-center items-center'><div class='loader'></div><p class='ml-4'>Running deep-dive competitor analysis...</p></div>");
+
+            try {
+                // This tool *does* use search for fresh intel
+                const { text, sources } = await callGeminiAPI(userInput, systemPrompt, true);
+
+                // Append sources to the modal content
+                let html = simpleMarkdownToHtml(text);
+                if (sources && sources.length > 0) {
+                    html += `<h4 class="text-md font-semibold mt-6 mb-2 text-white">Grounded Sources</h4><ul class="list-disc ml-5 text-sm">`;
+                    html += sources.map(source => `
+                        <li>
+                            <a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="source-link" title="${source.uri}">
+                                ${source.title || 'Unknown Source'}
+                            </a>
+                        </li>
+                    `).join('');
+                    html += `</ul>`;
+                }
+
+                showModal("Deep-Dive Competitor Analysis", html);
+            } catch (error) {
+                console.error("Error in handleGenerateCompetitorAnalysis:", error);
+                showModal("API Error", `<p>Failed to generate competitor analysis. See console for details.</p><p>${error.message}</p>`);
+            }
+        }
+
+
+        // --- Core API & Utility Functions ---
+
+        /**
+         * Core function to call the Gemini API
+         * @param {string} userInput - The user's prompt text
+         * @param {string} systemPrompt - The system instruction for the model
+         * @param {boolean} useSearch - Whether to enable Google Search grounding
+         * @returns {Promise<{text: string, sources: Array<{uri: string, title: string}>}>}
+         */
+        async function callGeminiAPI(userInput, systemPrompt, useSearch = false) {
+            console.log("Calling Gemini API with search:", useSearch);
+            const apiKey = "AIzaSyDWfq5ed2XYJWr6w_EbPeENU6ImhOye4Xg";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userInput }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            if (useSearch) {
+                payload.tools = [{ "google_search": {} }];
+            }
+
+            let response;
+            try {
+                // Implement exponential backoff for retries
+                let attempt = 0;
+                const maxAttempts = 5;
+                let delay = 1000; // 1 second
+
+                while (attempt < maxAttempts) {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        break; // Success
+                    }
+
+                    if (response.status === 429 || response.status >= 500) {
+                        // Throttling or server error, wait and retry
+                        console.warn(`API call failed with status ${response.status}. Retrying in ${delay}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; // Exponential backoff
+                        attempt++;
+                    } else {
+                        // Other client-side error, don't retry
+                        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                    }
+                }
+
+                if (!response.ok) {
+                    throw new Error(`API call failed after ${maxAttempts} attempts.`);
+                }
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const text = candidate.content.parts[0].text;
+                    let sources = [];
+                    const groundingMetadata = candidate.groundingMetadata;
+
+                    if (useSearch && groundingMetadata && groundingMetadata.groundingAttributions) {
+                        sources = groundingMetadata.groundingAttributions
+                            .map(attr => ({
+                                uri: attr.web?.uri,
+                                title: attr.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title); // Ensure sources are valid
+                    }
+
+                    return { text, sources };
+
+                } else {
+                    console.error("Unexpected API response structure:", result);
+                    throw new Error("Invalid API response. No text content found.");
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                throw error; // Re-throw to be caught by handlers
+            }
+        }
+
+        /**
+         * Sets the loading state for the UI
+         */
+        function setLoading(isLoading, reportType, message = "Generating analysis...") {
+            if (isLoading) {
+                loaderText.textContent = message;
+                loader.classList.remove('hidden');
+                reportOutput.classList.add('hidden');
+                reportTitle.textContent = `Generating ${reportType}...`;
+            } else {
+                loader.classList.add('hidden');
+                reportOutput.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Displays the modal with content
+         */
+        function showModal(title, contentHtml) {
+            modalTitle.textContent = title;
+            modalContent.innerHTML = contentHtml;
+            modal.classList.remove('hidden');
+        }
+
+        /**
+         * Displays the list of grounded sources
+         */
+        function displaySources(sources) {
+            if (!sources || sources.length === 0) {
+                groundedSources.classList.add('hidden');
+                return;
+            }
+
+            sourcesList.innerHTML = sources.map(source => `
+                <div class="p-2 border border-gray-700 rounded-md bg-gray-800">
+                    <a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="source-link font-medium" title="${source.uri}">
+                        ${source.title || 'Unknown Source'}
+                    </a>
+                </div>
+            `).join('');
+
+            groundedSources.classList.remove('hidden');
+        }
+
+        /**
+         * Simple Markdown to HTML converter
+         */
+        function simpleMarkdownToHtml(md) {
+            if (typeof md !== 'string') {
+                return ''; // Return empty string if md is not a string
+            }
+
+            let html = md;
+
+            // Headers (e.g., ## Title)
+            html = html.replace(/^##\s+(.*)$/gm, '<h2 class="text-xl font-semibold mt-6 mb-2 border-b border-gray-700 pb-1">$1</h2>');
+            html = html.replace(/^###\s+(.*)$/gm, '<h3 class="text-lg font-semibold mt-4 mb-2 text-blue-300">$1</h3>');
+            html = html.replace(/^####\s+(.*)$/gm, '<h4 class="text-md font-semibold mt-4 mb-2">$1</h4>');
+
+            // Bold (e.g., **Text**)
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // Italics (e.g., *Text*)
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+            // Unordered Lists (e.g., - Item or * Item)
+            // Handle lists that might not have a newline before them
+            html = html.replace(/(\n|^)([\s*]*-|\*)\s+(.*)/g, '$1<ul><li>$3</li></ul>');
+            // Consolidate adjacent list items into single <ul>
+            html = html.replace(/<\/ul>\n?<ul>/g, '');
+
+            // Paragraphs (split by newlines)
+            html = html.split('\n').map(p => {
+                p = p.trim();
+                if (p.length === 0 || p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('</ul') || p.startsWith('<li')) {
+                    return p;
+                }
+                return `<p>${p}</p>`;
+            }).join('\n');
+
+            // Clean up empty paragraphs
+            html = html.replace(/<p><\/p>/g, '');
+            // Clean up line breaks
+            html = html.replace(/\n/g, '<br>');
+            // Fix breaks inside lists
+            html = html.replace(/<br><li>/g, '<li>');
+            html = html.replace(/<\/li><br>/g, '</li>');
+            // Fix breaks inside paragraphs
+            html = html.replace(/<p><br>/g, '<p>');
+            html = html.replace(/<br><\/p>/g, '</p>');
+            // Fix breaks before headers
+            html = html.replace(/<br><h[234]>/g, '<h$1>');
+
+            return html;
+        }
+
+    </script>
+</body>
+
+</html>
