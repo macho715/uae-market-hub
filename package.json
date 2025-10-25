@@ -1,8 +1,5 @@
 {
   "name": "uae-market-hub",
   "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "vercel build"
-  }
+  "type": "module"
 }
