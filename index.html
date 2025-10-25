@@ -652,9 +652,24 @@
          */
         async function callGeminiAPI(userInput, systemPrompt, useSearch = false) {
             console.log("Calling Gemini API via proxy with search:", useSearch);
-            
-            // Use backend proxy - API Key is managed securely server-side
-            const proxyUrl = '/.netlify/functions/gemini-proxy';
+
+            // Platform auto-detection for multi-platform support
+            const isVercel = window.location.hostname.includes('vercel.app');
+            const isNetlify = window.location.hostname.includes('netlify.app');
+
+            // Select appropriate proxy URL based on deployment platform
+            let proxyUrl;
+            if (isVercel) {
+                proxyUrl = '/api/gemini-proxy';
+                console.log('Detected Vercel deployment');
+            } else if (isNetlify) {
+                proxyUrl = '/.netlify/functions/gemini-proxy';
+                console.log('Detected Netlify deployment');
+            } else {
+                // Local development: default to Netlify format
+                proxyUrl = '/.netlify/functions/gemini-proxy';
+                console.log('Using default endpoint (Netlify format)');
+            }
 
             const payload = {
                 userInput: userInput,

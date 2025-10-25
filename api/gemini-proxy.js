@@ -1,28 +1,21 @@
-exports.handler = async (event, context) => {
+export default async function handler(req, res) {
     // CORS headers
-    const headers = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Content-Type': 'application/json'
-    };
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     // Handle OPTIONS request (CORS preflight)
-    if (event.httpMethod === 'OPTIONS') {
-        return { statusCode: 200, headers, body: '' };
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
     }
 
     // Only allow POST requests
-    if (event.httpMethod !== 'POST') {
-        return {
-            statusCode: 405,
-            headers,
-            body: JSON.stringify({ error: 'Method not allowed' })
-        };
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        const { userInput, systemPrompt, useSearch } = JSON.parse(event.body);
+        const { userInput, systemPrompt, useSearch } = req.body;
 
         // Get API Key from environment variable
         const apiKey = process.env.GEMINI_API_KEY;
@@ -55,18 +48,10 @@ exports.handler = async (event, context) => {
 
         const result = await response.json();
 
-        return {
-            statusCode: 200,
-            headers,
-            body: JSON.stringify(result)
-        };
+        return res.status(200).json(result);
 
     } catch (error) {
         console.error('Proxy error:', error);
-        return {
-            statusCode: 500,
-            headers,
-            body: JSON.stringify({ error: error.message })
-        };
+        return res.status(500).json({ error: error.message });
     }
-};
+}
