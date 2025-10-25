@@ -644,27 +644,23 @@
         // --- Core API & Utility Functions ---
 
         /**
-         * Core function to call the Gemini API
+         * Core function to call the Gemini API via backend proxy
          * @param {string} userInput - The user's prompt text
          * @param {string} systemPrompt - The system instruction for the model
          * @param {boolean} useSearch - Whether to enable Google Search grounding
          * @returns {Promise<{text: string, sources: Array<{uri: string, title: string}>}>}
          */
         async function callGeminiAPI(userInput, systemPrompt, useSearch = false) {
-            console.log("Calling Gemini API with search:", useSearch);
-            const apiKey = "AIzaSyDWfq5ed2XYJWr6w_EbPeENU6ImhOye4Xg";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            console.log("Calling Gemini API via proxy with search:", useSearch);
+            
+            // Use backend proxy - API Key is managed securely server-side
+            const proxyUrl = '/.netlify/functions/gemini-proxy';
 
             const payload = {
-                contents: [{ parts: [{ text: userInput }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
+                userInput: userInput,
+                systemPrompt: systemPrompt,
+                useSearch: useSearch
             };
-
-            if (useSearch) {
-                payload.tools = [{ "google_search": {} }];
-            }
 
             let response;
             try {
@@ -674,7 +670,7 @@
                 let delay = 1000; // 1 second
 
                 while (attempt < maxAttempts) {
-                    response = await fetch(apiUrl, {
+                    response = await fetch(proxyUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
@@ -686,18 +682,18 @@
 
                     if (response.status === 429 || response.status >= 500) {
                         // Throttling or server error, wait and retry
-                        console.warn(`API call failed with status ${response.status}. Retrying in ${delay}ms...`);
+                        console.warn(`Proxy call failed with status ${response.status}. Retrying in ${delay}ms...`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                         delay *= 2; // Exponential backoff
                         attempt++;
                     } else {
                         // Other client-side error, don't retry
-                        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                        throw new Error(`Proxy Error: ${response.status} ${response.statusText}`);
                     }
                 }
 
                 if (!response.ok) {
-                    throw new Error(`API call failed after ${maxAttempts} attempts.`);
+                    throw new Error(`Proxy call failed after ${maxAttempts} attempts.`);
                 }
 
                 const result = await response.json();
@@ -724,7 +720,7 @@
                     throw new Error("Invalid API response. No text content found.");
                 }
             } catch (error) {
-                console.error("Error calling Gemini API:", error);
+                console.error("Error calling Gemini API via proxy:", error);
                 throw error; // Re-throw to be caught by handlers
             }
         }
