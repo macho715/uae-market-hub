@@ -1,7 +1,7 @@
 {
   "functions": {
-    "api/**/*.js": {
-      "maxDuration": 10
+    "api/gemini-proxy.js": {
+      "maxDuration": 30
     }
   }
 }
